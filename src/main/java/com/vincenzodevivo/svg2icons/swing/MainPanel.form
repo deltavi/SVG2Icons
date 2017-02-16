@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.vincenzodevivo.svg2icons.swing.MainPanel">
-  <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="10" left="10" bottom="10" right="10"/>
+  <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="48" y="54" width="756" height="500"/>
     </constraints>
     <properties>
       <minimumSize width="600" height="500"/>
-      <preferredSize width="600" height="500"/>
+      <preferredSize width="700" height="500"/>
     </properties>
     <border type="none"/>
     <children>
       <grid id="94766" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
@@ -30,7 +30,7 @@
       <grid id="e3588" binding="dropPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="24" height="87"/>
           </grid>
         </constraints>
@@ -48,6 +48,92 @@
           </component>
         </children>
       </grid>
+      <toolbar id="3718b" binding="toolBar">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="25"/>
+          </grid>
+        </constraints>
+        <properties>
+          <borderPainted value="false"/>
+          <floatable value="false"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="cd271" class="javax.swing.JCheckBox" binding="checkBox16x16">
+            <constraints/>
+            <properties>
+              <selected value="true"/>
+              <text value="16x16"/>
+            </properties>
+          </component>
+          <component id="bdb" class="javax.swing.JCheckBox" binding="checkBox20x20">
+            <constraints/>
+            <properties>
+              <selected value="true"/>
+              <text value="20x20"/>
+            </properties>
+          </component>
+          <component id="1850e" class="javax.swing.JCheckBox" binding="checkBox24x24">
+            <constraints/>
+            <properties>
+              <selected value="true"/>
+              <text value="24x24"/>
+            </properties>
+          </component>
+          <component id="df9f" class="javax.swing.JCheckBox" binding="checkBox32x32">
+            <constraints/>
+            <properties>
+              <selected value="true"/>
+              <text value="32x32"/>
+            </properties>
+          </component>
+          <component id="8da33" class="javax.swing.JCheckBox" binding="checkBox48x48">
+            <constraints/>
+            <properties>
+              <text value="48x48"/>
+            </properties>
+          </component>
+          <component id="82f0e" class="javax.swing.JCheckBox" binding="checkBox64x64">
+            <constraints/>
+            <properties>
+              <text value="64x64"/>
+            </properties>
+          </component>
+          <component id="283e7" class="javax.swing.JCheckBox" binding="checkBox128x128">
+            <constraints/>
+            <properties>
+              <text value="128x128"/>
+            </properties>
+          </component>
+          <component id="b6b9" class="javax.swing.JToolBar$Separator">
+            <constraints/>
+            <properties>
+              <separatorSize width="4" height="13"/>
+            </properties>
+          </component>
+          <component id="bc43f" class="javax.swing.JCheckBox" binding="checkBoxCustom">
+            <constraints/>
+            <properties>
+              <text value=""/>
+              <toolTipText value="Enable custom size"/>
+            </properties>
+          </component>
+          <component id="37342" class="javax.swing.JSpinner" binding="spinnerWidth">
+            <constraints/>
+            <properties>
+              <enabled value="true"/>
+              <toolTipText value="Width"/>
+            </properties>
+          </component>
+          <component id="8f40f" class="javax.swing.JSpinner" binding="spinnerHeight">
+            <constraints/>
+            <properties>
+              <toolTipText value="Height"/>
+            </properties>
+          </component>
+        </children>
+      </toolbar>
     </children>
   </grid>
 </form>

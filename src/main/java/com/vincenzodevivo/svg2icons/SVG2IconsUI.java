@@ -2,8 +2,9 @@ package com.vincenzodevivo.svg2icons;
 
 import com.vincenzodevivo.svg2icons.swing.MainPanel;
 import com.vincenzodevivo.svg2icons.swing.dnd.DropFilesHandler;
+import com.vincenzodevivo.svg2icons.transformer.IconSize;
+import com.vincenzodevivo.svg2icons.transformer.SvgToPng;
 
-import javax.swing.*;
 import java.io.File;
 import java.util.List;
 
@@ -13,14 +14,21 @@ import java.util.List;
 public class SVG2IconsUI {
     public static void main(String[] args) {
         MainPanel dialog = new MainPanel();
-        dialog.setDropFilesHandler((files, progress) -> {
-            for (File file : files) {
-                try {
-                    System.out.println(file);
-                    Thread.sleep(1000);
-                    progress.run();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+
+        dialog.setDropFilesHandler(new DropFilesHandler() {
+            @Override
+            public void onDropFiles(List<File> files, List<IconSize> selectedSizeList, Runnable progress) {
+                for (File file : files) {
+                    for (IconSize size : selectedSizeList) {
+                        try {
+                            File outFolder = new File("./out/" + size.toString());
+                            SvgToPng.convertFile(file, outFolder, size);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            progress.run();
+                        }
+                    }
                 }
             }
         });
