@@ -8,6 +8,7 @@ SVG2Icons rasterize SVG to PNG icons in the following sizes: **16x16** px, **20x
 - Execute **run.bat**
 - Select desired icons size
 - Drag and drop **SVG** files and folder
+
 ![SVG2Icons UI](docs/images/svg2icons-ui.png)
 
 ### Output directories
