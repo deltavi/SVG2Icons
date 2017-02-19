@@ -7,7 +7,7 @@
     </constraints>
     <properties>
       <minimumSize width="600" height="500"/>
-      <preferredSize width="700" height="500"/>
+      <preferredSize width="600" height="400"/>
     </properties>
     <border type="none"/>
     <children>
@@ -37,13 +37,17 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="5470b" class="javax.swing.JLabel">
+          <component id="5470b" class="javax.swing.JLabel" binding="dropLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font size="24" style="1"/>
+              <icon value="icons/main-icon.64x64.png"/>
+              <iconTextGap value="20"/>
               <text value="Drag and drop SVGs here"/>
+              <verticalAlignment value="0"/>
+              <verticalTextPosition value="0"/>
             </properties>
           </component>
         </children>
@@ -119,17 +123,11 @@
               <toolTipText value="Enable custom size"/>
             </properties>
           </component>
-          <component id="37342" class="javax.swing.JSpinner" binding="spinnerWidth">
+          <component id="37342" class="javax.swing.JSpinner" binding="spinnerCustomSize">
             <constraints/>
             <properties>
               <enabled value="true"/>
-              <toolTipText value="Width"/>
-            </properties>
-          </component>
-          <component id="8f40f" class="javax.swing.JSpinner" binding="spinnerHeight">
-            <constraints/>
-            <properties>
-              <toolTipText value="Height"/>
+              <toolTipText value="Custom size"/>
             </properties>
           </component>
         </children>

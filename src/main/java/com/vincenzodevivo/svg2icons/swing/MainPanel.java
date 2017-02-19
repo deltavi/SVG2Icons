@@ -1,6 +1,6 @@
 package com.vincenzodevivo.svg2icons.swing;
 
-import com.vincenzodevivo.svg2icons.file.FlatFileList;
+import com.vincenzodevivo.jdutils.file.FlatFileList;
 import com.vincenzodevivo.svg2icons.swing.dnd.DropFilesHandler;
 import com.vincenzodevivo.svg2icons.transformer.IconSize;
 
@@ -11,11 +11,12 @@ import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDropEvent;
 import java.io.File;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class MainPanel extends JDialog {
+public class MainPanel extends JFrame {
     private JPanel contentPane;
     private JPanel dropPanel;
     private JProgressBar progressBar;
@@ -26,18 +27,18 @@ public class MainPanel extends JDialog {
     private JCheckBox checkBox64x64;
     private JCheckBox checkBox128x128;
     private JCheckBox checkBox20x20;
-    private JSpinner spinnerHeight;
-    private JSpinner spinnerWidth;
+    private JSpinner spinnerCustomSize;
     private JCheckBox checkBoxCustom;
     private JToolBar toolBar;
+    private JLabel dropLabel;
     private DropFilesHandler dropFilesHandler;
 
+    @SuppressWarnings("unchecked")
+    public MainPanel(String extension) {
 
-    public MainPanel() {
         setContentPane(contentPane);
-        setModal(true);
-        spinnerWidth.setModel(new SpinnerNumberModel(1, 1, 1000, 1));
-        spinnerHeight.setModel(new SpinnerNumberModel(1, 1, 1000, 1));
+        //setModal(true);
+        spinnerCustomSize.setModel(new SpinnerNumberModel(256, 1, 1000, 1));
         dropPanel.setDropTarget(new DropTarget() {
             public synchronized void drop(DropTargetDropEvent evt) {
                 try {
@@ -45,30 +46,43 @@ public class MainPanel extends JDialog {
                     List<File> droppedFiles = (List<File>) evt.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
                     AtomicInteger count = new AtomicInteger();
                     if (dropFilesHandler != null) {
-                        FlatFileList fileList = new FlatFileList("svg");
-                        for (File file : droppedFiles) {
-                            fileList.addFiles(file);
-                        }
+                        FlatFileList flatFileList = new FlatFileList(extension);
+                        flatFileList.addFiles(droppedFiles);
+                        final List<File> fileList = flatFileList.getList();
+                        List<IconSize> selectedSizeList = getSelectedSizeList();
+
                         progressBar.setStringPainted(true);
                         progressBar.setMinimum(0);
-                        List<IconSize> selectedSizeList = getSelectedSizeList();
-                        progressBar.setMaximum(fileList.getList().size() * selectedSizeList.size());
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                dropFilesHandler.onDropFiles(fileList.getList(), selectedSizeList, new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        SwingUtilities.invokeLater(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                progressBar.setValue(count.incrementAndGet());
-                                            }
-                                        });
-                                    }
-                                });
-                            }
-                        }).start();
+                        int totalOutputFiles = fileList.size() * selectedSizeList.size();
+                        progressBar.setMaximum(totalOutputFiles);
+                        if (fileList.size() > 0 && selectedSizeList.size() > 0) {
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dropLabel.setText("Generating: 0/" + totalOutputFiles + " file/s");
+                                    dropFilesHandler.onDropFiles(fileList, selectedSizeList, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            SwingUtilities.invokeLater(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    progressBar.setValue(count.incrementAndGet());
+                                                    if (count.get() != totalOutputFiles) {
+                                                        dropLabel.setText("Generating: " + count.get() + "/" + totalOutputFiles + " file/s");
+                                                    } else {
+                                                        dropLabel.setText("Drag and drop SVGs here");
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+
+                                }
+                            }).start();
+                        } else {
+                            progressBar.setMaximum(1);
+                            progressBar.setValue(0);
+                        }
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -77,8 +91,6 @@ public class MainPanel extends JDialog {
         });
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        pack();
-        setLocationRelativeTo(null);
     }
 
     public List<IconSize> getSelectedSizeList() {
@@ -89,7 +101,13 @@ public class MainPanel extends JDialog {
                 JCheckBox checkBox = (JCheckBox) component;
                 if (checkBox.isSelected()) {
                     if (checkBox.equals(checkBoxCustom)) {
-                        selectedSizeList.add(new IconSize(spinnerWidth.getValue(), spinnerHeight.getValue()));
+                        try {
+                            spinnerCustomSize.commitEdit();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        Object value = spinnerCustomSize.getModel().getValue();
+                        selectedSizeList.add(new IconSize(value, value));
                     } else {
                         selectedSizeList.add(new IconSize(checkBox.getText()));
                     }

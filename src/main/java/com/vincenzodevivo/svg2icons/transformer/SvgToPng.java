@@ -1,5 +1,6 @@
 package com.vincenzodevivo.svg2icons.transformer;
 
+import com.vincenzodevivo.jdutils.file.FileUtils;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
@@ -21,7 +22,9 @@ public class SvgToPng {
         t.addTranscodingHint(PNGTranscoder.KEY_HEIGHT, size.getHeight());
 
         folderOut.mkdirs();
-        File outputFile = new File(folderOut, input.getName() + size.toString() + ".png");
+
+        String fileName = FileUtils.changeExtension(input.getName(), size.toString() + ".png");
+        File outputFile = new File(folderOut, fileName);
         outputFile.createNewFile();
         try (FileOutputStream outStram = new FileOutputStream(outputFile)) {
             t.transcode(ti, new TranscoderOutput(outStram));
